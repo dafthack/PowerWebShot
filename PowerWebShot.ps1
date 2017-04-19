@@ -2,42 +2,50 @@
 <#
   .SYNOPSIS
 
-    This module will 
+    This function uses Selenium and PhantomJS to screenshot web servers and create a report with thumbnails of each one for quick analysis. (Based of of Chris Truncer's Eyewitness)
 
     Invoke-PowerWebShot
     Author: Beau Bullock (@dafthack)
-    License: BSD 3-Clause
-    Required Dependencies: None
+    License: MIT
+    Required Dependencies: Phantomjs.exe and the Selenium WebDriver.dll need to be in the current working directory off the script.
     Optional Dependencies: None
 
   .DESCRIPTION
 
-    This module 
+    This function uses Selenium and PhantomJS to screenshot web servers and create a report with thumbnails of each one for quick analysis. (Based of of Chris Truncer's Eyewitness)
 
   .PARAMETER URL
 
-    Username 
+    A single URL to screenshot.
 
   .PARAMETER UrlList
 
-    The host
+    A list of URL's one per line to screenshot.
 
   .PARAMETER Threads
 
-    The usern
+    (Placeholder for multi-threading to be added in later)
 
   .PARAMETER OutputDir
 
-    The Pas
+    The directory to output the screenshots to. If none is specified one will be created automatically.
  
 
   .EXAMPLE
 
-    C:\PS> Invoke-PowerWebShot -
+    C:\PS> Invoke-PowerWebShot -URL http://www.google.com
 
     Description
     -----------
-    This command will c
+    This command will take a screenshot of http://www.google.com and add it to a file called report.html in an automatically generated directory with the current date/time as the folder title.
+    
+  .EXAMPLE
+
+    C:\PS> Invoke-PowerWebShot -UrlList urllist.txt -OutputDir web-server-screenshot-directory
+
+    Description
+    -----------
+    This command will take a screenshot each of the URL's in the file "urllist.txt" and add them to a file called report.html. Each screenshot and the report will be located in a directory called "web-server-screenshot-directory".
 
  #>
 
@@ -83,7 +91,6 @@ $options.AddAdditionalCapability("phantomjs.page.settings.webSecurityEnabled", $
 $options.AddAdditionalCapability("phantomjs.page.settings.userAgent", "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko")
 $phantomjspath = ".\"
 $driver = New-Object OpenQA.Selenium.PhantomJS.PhantomJSDriver($phantomjspath, $options)
-#$uri = "https://self-signed.badssl.com"
 #$driver = New-Object OpenQA.Selenium.Remote.RemoteWebDriver($uri,$caps)
 
 $driver.Url = "about:constant"
